@@ -27,12 +27,16 @@ void QCoolLine::mousePressEvent(QMouseEvent *mouse_event)
 
     switch (mouse_es) {
     case set_first_point:
+        scene->clear();
         scene->addEllipse(mouse_event->x(), mouse_event->y(), 1, 1, QPen());
         point1 = mouse_event->pos();
         mouse_es = set_second_point;
         break;
 
     case set_second_point:
+        // This piece of code will help me determine the presence of elements on the scene
+        qDebug() << "There are" << items(mouse_event->pos()).size() << "items at position" << mapToScene(mouse_event->pos());
+
         scene->addEllipse(mouse_event->x(), mouse_event->y(), 1, 1, QPen());
         point2 = mouse_event->pos();
         line.setPoints(point1, point2);
