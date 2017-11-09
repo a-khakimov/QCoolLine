@@ -26,11 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     #graphicswindow.cpp \
-    qcoolline.cpp
+    qcoolline.cpp \
+    leealgorythm.cpp
 
 HEADERS += \
     #graphicswindow.h
-    qcoolline.h
+    qcoolline.h \
+    leealgorythm.h
 
 
 FORMS    +=
