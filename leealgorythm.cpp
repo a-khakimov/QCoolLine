@@ -1,18 +1,5 @@
 #include "leealgorythm.h"
-/*
-void LeeAlgorythm::SetSize(size_t W, size_t H)
-{
-    this->W = W;
-    this->H = H;
-    grid = new int*[H];
-    for(size_t h = 0; h < this->H; ++h)
-        grid[h] = new int[W];
 
-    for(size_t h = 0; h < this->H; ++h)
-        for(size_t w = 0; w < this->W; ++w)
-            grid[h][w] = 0;
-}
-*/
 void LeeAlgorythm::SetSize(size_t W, size_t H)
 {
     this->W = W;

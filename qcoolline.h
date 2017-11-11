@@ -48,7 +48,7 @@ private:
 
     void setWidgets();
     void sceneInit(size_t szX, size_t szY);
-    void setRects(size_t quantity);
+    void setRects(size_t quantity, size_t box_size);
 
 public slots:
     void mousePressEvent(QMouseEvent *mouse_event);

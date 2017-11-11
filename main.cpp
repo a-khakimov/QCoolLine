@@ -1,6 +1,5 @@
 #include <QApplication>
 #include "qcoolline.h"
-#include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {

@@ -5,10 +5,9 @@ QCoolLine::QCoolLine()
 {
     sceneInit(500, 500);
 
-
     leeAlg = new LeeAlgorythm();
     leeAlg->SetSize(this->sceneX_sz, this->sceneY_sz);
-    setRects(box_quantity);
+    setRects(box_quantity, box_size);
 
     setWidgets();
     this->show();
@@ -29,7 +28,7 @@ void QCoolLine::sceneInit(size_t szX, size_t szY)
     this->mouse_es = set_first_point;
 }
 
-void QCoolLine::setRects(size_t quantity)
+void QCoolLine::setRects(size_t quantity, size_t box_size)
 {
     // Set rects
     QPoint point;
@@ -37,8 +36,8 @@ void QCoolLine::setRects(size_t quantity)
     for(size_t i = 0; i < quantity; ++i) {
         point.setX(qrand() % (sceneX_sz - 1));
         point.setY(qrand() % (sceneY_sz - 1));
-        int w = (qrand() % 20) + 4;
-        int h = (qrand() % 20) + 4;
+        int w = (qrand() % (box_size + 4));
+        int h = (qrand() % (box_size + 4));
         leeAlg->setRect(point, w, h);
         scene->addRect(point.x(), point.y(), w, h, QPen(Qt::black), QBrush(Qt::lightGray));
     }
@@ -147,11 +146,8 @@ void QCoolLine::mousePressEvent(QMouseEvent *mouse_event)
                     scene->addEllipse(leeAlg->path.at(i).x(), leeAlg->path.at(i).y(), 1, 1, QPen(Qt::red));
 
             mouse_es = set_first_point;
-
             leeAlg->path.clear();
             break;
-
-
 #if 0
         case delete_line:
             this->mouse_es = set_first_point;
@@ -173,7 +169,8 @@ void QCoolLine::buttonPressHandle()
     leeAlg->SetSize(this->sceneX_sz, this->sceneY_sz);
 
     box_quantity = boxQuantity->value();
-    setRects(box_quantity);
+    box_size = boxSize->value();
+    setRects(box_quantity, box_size);
     setWidgets();
 }
 
