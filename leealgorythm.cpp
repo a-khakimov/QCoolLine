@@ -1,51 +1,56 @@
-#include <iostream>
-#include <queue>
-#include <iterator>
-#include <vector>
+#include "leealgorythm.h"
 
 using namespace std;
 
-const int H      = 8;          // ширина рабочего поля
-const int W      = 8;          // высота рабочего поля
-const int WALL   = 1;          // непроходимая ячейка
-const int BLANK  = 0;          // свободная непомеченная ячейка
-
-struct Point {
-    int x;
-    int y;
-};
-
-queue<Point> path;      // координаты ячеек, входящих в путь
-int len;                       // длина пути
-queue<Point> wave;
-
-int grid[W][H] = { { 0, 0, 0, 0, 1, 0, 0, 0 } ,
-                   { 0, 0, 1, 0, 1, 0, 1, 0 } ,
-                   { 0, 0, 1, 0, 1, 0, 1, 0 } ,
-                   { 0, 0, 1, 0, 1, 0, 1, 0 } ,
-                   { 0, 0, 1, 0, 1, 0, 1, 0 } ,
-                   { 0, 0, 1, 0, 1, 0, 1, 0 } ,
-                   { 0, 0, 1, 0, 0, 0, 0, 0 } ,
-                   { 0, 0, 1, 0, 0, 0, 0, 0 }
-                 };                // рабочее поле
-
-int hx[4] = {-1, +1,  0,  0 };
-int hy[4] = { 0,  0, -1, +1 };
-int mark = -1;
-
-int getGridVal(Point pos)
+LeeAlgorythm::LeeAlgorythm()
 {
-    return grid[pos.x][pos.y];
+
 }
 
-void setGridVal(Point pos, int val)
-{
-    grid[pos.x][pos.y] = val;
+LeeAlgorythm::LeeAlgorythm(int H, int W){
+    this->H = H;
+    this->W = W;
+
+    grid = new int*[H];
+    for(size_t h = 0; h < this->H; ++h)
+        grid[h] = new int[W];
+
+    for(size_t h = 0; h < this->H; ++h)
+        for(size_t w = 0; w < this->W; ++w)
+            grid[h][w] = 0;
 }
 
-vector<Point> GetPath(Point endPoint)
+int LeeAlgorythm::getGridVal(Point pos) {
+    //if(pos.x > 0 && pos.x < W)
+      //  if(pos.y > 0 && pos.y < H)
+            return grid[pos.x][pos.y];
+}
+
+void LeeAlgorythm::setGridVal(Point pos, int val) {
+    //if(pos.x > 0 && pos.x < W)
+      //  if(pos.y > 0 && pos.y < H)
+            this->grid[pos.x][pos.y] = val;
+}
+
+void LeeAlgorythm::setRect(Point pos, int w, int h)
 {
-    vector<Point> path;
+    for(int i = pos.x; i < pos.x + w; ++i) {
+        for(int j = pos.y; j < pos.y + h; ++j) {
+            if(i < W && j < H) {
+                Point p = { i, j };
+                setGridVal(p, 1);
+            }
+        }
+    }
+}
+/*
+void LeeAlgorythm::GridInit() {
+
+
+}*/
+
+QVector<Point> LeeAlgorythm::GetPath(Point endPoint) {
+    QVector<Point> path;
     path.push_back(endPoint);
     int max_val = getGridVal(path.back());
     while(max_val < -1) {
@@ -62,37 +67,38 @@ vector<Point> GetPath(Point endPoint)
     return path;
 }
 
-bool CustomLee(Point beginPoint, Point endPoint)
-{
+bool LeeAlgorythm::CustomLee(Point beginPoint, Point endPoint) {
     if(getGridVal(beginPoint) || getGridVal(endPoint))
         return false;
-    wave.push(beginPoint);
+    wave.push_back(beginPoint);
     setGridVal(beginPoint, mark);
     while(!wave.empty()) {
         for(size_t i = 0; i < 4; ++i) {
             Point tmpPoint = { wave.front().x + hx[i], wave.front().y + hy[i] };
-            if(getGridVal(tmpPoint) == 0 ) {
-                if(tmpPoint.x >= 0 && tmpPoint.x < W && tmpPoint.y >= 0 && tmpPoint.y < H) {
-                    wave.push(tmpPoint);
+            if(tmpPoint.x >= 0 && tmpPoint.x < W && tmpPoint.y >= 0 && tmpPoint.y < H) {
+                if(getGridVal(tmpPoint) == 0 ) {
+                    wave.push_back(tmpPoint);
                     setGridVal(tmpPoint, getGridVal(wave.front()) - 1);
                     if(tmpPoint.x == endPoint.x && tmpPoint.y == endPoint.y) {
-                        cout << "x:" << tmpPoint.x << " y:" << tmpPoint.y << " V:" << getGridVal(tmpPoint) << endl;
-                        vector<Point> p = GetPath(tmpPoint);
+                        // cout << "x:" << tmpPoint.x << " y:" << tmpPoint.y << " V:" << getGridVal(tmpPoint) << endl;
+                        this->path = GetPath(tmpPoint);
+                        /*
                         for(size_t i = 0; i < p.size(); ++i) {
                             cout << getGridVal(p[i]) << " ";
                         }
                         cout << endl << endl;
+                        */
                         return true;
                     }
                 }
             }
         }
-        wave.pop();
+        wave.pop_front();
     }
     return false;
 }
 
-
+/*
 int main()
 {
     Point p1 = {0, 0};
@@ -107,3 +113,4 @@ int main()
 
     return 0;
 }
+*/
