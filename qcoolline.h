@@ -2,9 +2,17 @@
 #define QCOOLLINE_H
 
 #include <QObject>
-#include <QWidget>
+#include <QCoreApplication>
+#include <QGraphicsProxyWidget>
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QDebug>
+#include <QMouseEvent>
+#include <QDateTime>
+
+#include <QPushButton>
+#include <QSpinBox>
+#include <QLabel>
 
 #include "leealgorythm.h"
 
@@ -20,21 +28,31 @@ class QCoolLine : public QGraphicsView
 
 public:
     QCoolLine();
-
     QGraphicsScene *scene;
 
 private:
     mouse_event_state mouse_es;
     QPoint point1, point2;
     QLine line;
-    // LeeAlgorythm leeAlg;
+
+    QPushButton *btnuser;
+    QSpinBox *boxQuantity, *boxSize, *boardSizeX, *boardSizeY;
+    QLabel *boxQuantityLabel, *boxSizeLabel, *boardSizeXLabel, *boardSizeYLabel;
+
+    LeeAlgorythm *leeAlg;
     size_t sceneX_sz = 500;
     size_t sceneY_sz = 500;
-    int grid[500][500];
+    size_t box_quantity = 100;
+    size_t box_size = 10;
+    QVector<QVector<int>> grid;
+
+    void setWidgets();
+    void sceneInit(size_t szX, size_t szY);
+    void setRects(size_t quantity);
 
 public slots:
     void mousePressEvent(QMouseEvent *mouse_event);
-
+    void buttonPressHandle();
 };
 
 
