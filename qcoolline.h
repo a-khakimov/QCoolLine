@@ -28,6 +28,7 @@ class QCoolLine : public QGraphicsView
 
 public:
     QCoolLine();
+    ~QCoolLine();
     QGraphicsScene *scene;
 
 private:
@@ -40,15 +41,16 @@ private:
     QLabel *boxQuantityLabel, *boxSizeLabel, *boardSizeXLabel, *boardSizeYLabel;
 
     LeeAlgorythm *leeAlg;
+    QVector<QVector<int>> grid;
+
     size_t sceneX_sz = 500;
     size_t sceneY_sz = 500;
     size_t box_quantity = 100;
-    size_t box_size = 10;
-    QVector<QVector<int>> grid;
+    size_t box_size = 30;
 
     void setWidgets();
-    void sceneInit(size_t szX, size_t szY);
-    void setRects(size_t quantity, size_t box_size);
+    void sceneInit(const size_t &szX, const size_t &szY);
+    void setRects(const size_t &quantity, const size_t &box_size);
 
 public slots:
     void mousePressEvent(QMouseEvent *mouse_event);

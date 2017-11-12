@@ -1,43 +1,38 @@
 #include "leealgorythm.h"
 
-void LeeAlgorythm::SetSize(size_t W, size_t H)
-{
+void LeeAlgorythm::SetSize(const size_t &W, const size_t &H) {
     this->W = W;
     this->H = H;
 
-    grid.resize(W*2);
-    for(size_t w = 0; w < this->H; ++w)
-        grid[w].resize(H*2);
+    grid.resize(this->W);
+    for(size_t w = 0; w < this->W; ++w)
+        grid[w].resize(this->H);
+}
 
-    for(size_t h = 0; h < this->H; ++h)
-        for(size_t w = 0; w < this->W; ++w)
-            grid[h][w] = 0;
+LeeAlgorythm::~LeeAlgorythm() {
 
 }
 
-int LeeAlgorythm::getGridVal(QPoint pos) {
+int LeeAlgorythm::getGridVal(const QPoint &pos) const {
     return grid[pos.x()][pos.y()];
 }
 
-void LeeAlgorythm::setGridVal(QPoint pos, int val) {
+void LeeAlgorythm::setGridVal(const QPoint &pos, const int &val) {
     this->grid[pos.x()][pos.y()] = val;
 }
 
-void LeeAlgorythm::setRect(QPoint pos, int w, int h)
-{
+void LeeAlgorythm::setRect(const QPoint &pos, const int &w, const int &h) {
     for(int i = pos.x(); i < pos.x() + w; ++i) {
         for(int j = pos.y(); j < pos.y() + h; ++j) {
             if(i < W && j < H) {
-                QPoint p;
-                p.setX(i);
-                p.setY(j);
+                QPoint p(i, j);
                 setGridVal(p, 1);
             }
         }
     }
 }
 
-QVector<QPoint> LeeAlgorythm::GetPath(QPoint endPoint) {
+QVector<QPoint> LeeAlgorythm::GetPath(const QPoint &endPoint) {
     QVector<QPoint> path;
     path.push_back(endPoint);
     int max_val = getGridVal(path.back());
@@ -55,23 +50,21 @@ QVector<QPoint> LeeAlgorythm::GetPath(QPoint endPoint) {
     return path;
 }
 
-bool LeeAlgorythm::CustomLee(QPoint beginPoint, QPoint endPoint) {
+bool LeeAlgorythm::CustomLee(const QPoint &beginPoint, const QPoint &endPoint) {
     if(getGridVal(beginPoint) || getGridVal(endPoint))
         return false;
+    QQueue<QPoint> wave;
     wave.push_back(beginPoint);
     setGridVal(beginPoint, mark);
     while(!wave.empty()) {
         for(size_t i = 0; i < 4; ++i) {
-            QPoint tmpPoint;
-            tmpPoint.setX(wave.front().x() + hx[i]);
-            tmpPoint.setY(wave.front().y() + hy[i]);
+            QPoint tmpPoint(wave.front().x() + hx[i], wave.front().y() + hy[i]);
             if(tmpPoint.x() >= 0 && tmpPoint.x() < W && tmpPoint.y() >= 0 && tmpPoint.y() < H) {
                 if(getGridVal(tmpPoint) == 0 ) {
                     wave.push_back(tmpPoint);
                     setGridVal(tmpPoint, getGridVal(wave.front()) - 1);
                     if(tmpPoint.x() == endPoint.x() && tmpPoint.y() == endPoint.y()) {
                         this->path = GetPath(tmpPoint);
-                        wave.clear();
                         return true;
                     }
                 }
