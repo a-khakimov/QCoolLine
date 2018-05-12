@@ -1,5 +1,16 @@
 # QCoolLine
 
-Небольшая программа, для рисования на сцене максимально коротких линий между двумя точками. Для нахождения кратчайшего пути использовался алгоритм поиска в ширину.
+## What is it?
 
-![alt text](https://bytebucket.org/Hakimov/qcoolline/raw/54ae876022e9721efeea3e3125f5541424b2fa65/screen.png "Logo Title Text 1")
+The program for drawing the shortest possible lines on the stage. 
+When starting, obstacles are randomly placed on the stage, then you need to specify point **А** and point **B**, after which a line will be drawn that shows the smallest length between these points.
+
+Code was written using Qt Creator.
+For finding shortest lines between points, I used Breadth-first search algorithm.
+
+# How run it?
+
+To run the program, install **Qt Creator**, open the project and run it.
+There should be no problem.
+
+![alt text](/screen.png)
