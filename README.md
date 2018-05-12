@@ -8,7 +8,7 @@ When starting, obstacles are randomly placed on the stage, then you need to spec
 Code was written using Qt Creator.
 For finding shortest lines between points, I used Breadth-first search algorithm.
 
-# How run it?
+## How run it?
 
 To run the program, install **Qt Creator**, open the project and run it.
 There should be no problem.
