@@ -14,7 +14,7 @@ For finding shortest lines between points, used breadth-first search algorithm.
 
 ## More
 
-More information about the program can be found in my [blog](https://techlinked.github.io/c/c++/qt/algorythms/bfs/2018/05/20/qcoolline.html)
+More information about the program can be found in my [blog](https://a-khakimov.github.io/posts/qcoolline/)
 
 ## How run it?
 
